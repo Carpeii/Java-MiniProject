@@ -1,3 +1,5 @@
+import org.jsoup.nodes.Document;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +35,7 @@ public class NewsApp extends JFrame {
 
     private NewsHeadlineScraper newsHeadlineScraper;
     private String strUrl = "https://news.daum.net/?nil_profile=mini&nil_src=news";
+
     public NewsApp(){
         newsHeadlineScraper = new NewsHeadlineScraper(strUrl);
         setContentPane(mainPanel);
@@ -60,27 +63,27 @@ public class NewsApp extends JFrame {
     public void refreshUi(){
         ArrayList<String> result = newsHeadlineScraper.getHeadLine();
 
-        textField1.setText("");
-        textField2.setText("");
-        textField3.setText("");
-        textField4.setText("");
-        textField5.setText("");
-        textField6.setText("");
-        textField7.setText("");
-        textField8.setText("");
-        textField9.setText("");
-        textField10.setText("");
-
-        textField1.setText(result.get(0));
-        textField2.setText(result.get(1));
-        textField3.setText(result.get(2));
-        textField4.setText(result.get(3));
-        textField5.setText(result.get(4));
-        textField6.setText(result.get(5));
-        textField7.setText(result.get(6));
-        textField8.setText(result.get(7));
-        textField9.setText(result.get(8));
-        textField10.setText(result.get(9));
+//        textField1.setText("");
+//        textField2.setText("");
+//        textField3.setText("");
+//        textField4.setText("");
+//        textField5.setText("");
+//        textField6.setText("");
+//        textField7.setText("");
+//        textField8.setText("");
+//        textField9.setText("");
+//        textField10.setText("");
+//
+//        textField1.setText(result.get(0));
+//        textField2.setText(result.get(1));
+//        textField3.setText(result.get(2));
+//        textField4.setText(result.get(3));
+//        textField5.setText(result.get(4));
+//        textField6.setText(result.get(5));
+//        textField7.setText(result.get(6));
+//        textField8.setText(result.get(7));
+//        textField9.setText(result.get(8));
+//        textField10.setText(result.get(9));
     }
 
     public static void main(String[] args) {

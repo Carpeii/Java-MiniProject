@@ -1,3 +1,8 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,7 +14,7 @@ public class NewsHeadlineScraper {
     private URL url;
     private URLConnection urlConnection;
 
-    private ArrayList<String> newsUrl;
+    private Document doc;
     String strUrl;
 
     public NewsHeadlineScraper(String strUrl) {
@@ -20,48 +25,23 @@ public class NewsHeadlineScraper {
     }
 
     public ArrayList<String> getHeadLine() {
-        BufferedReader br = null;
-        ArrayList<String> result = new ArrayList<>();
-        ArrayList<String> newUrl = new ArrayList<String>();
-        newsUrl = newUrl;
-        boolean flag = false;
         try {
-            url = new URL(this.strUrl);
-            urlConnection = url.openConnection();
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
+            doc = Jsoup.connect(strUrl).get();
 
-            while ((line = br.readLine()) != null) {
-               if(line.contains("class=\"link_txt\" data-tiara-layer=\"article_main\"")) {
-                   flag = true;
-                   continue;
-               }
-               if(line.contains("</a>")){
-                   flag = false;
-               }
-               if(flag) {
-                   result.add(line.trim());
-               }
-
-
-               if(line.contains("https://v.daum.net")) {
-                   System.out.println(line);
-                   int start = line.indexOf("https://");
-                   int end = line.indexOf("\\\\\\\"", start);
-//                   System.out.println(link);
-               }
-
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return result;
+
+        Elements elements = doc.getElementsByClass("link_txt");
+        Elements headlineElements = doc.getElementsByClass("tit_g");
+        System.out.println(headlineElements.get(0).text());
+
+        System.out.println(elements.get(0).select("a").attr("href"));
+
+        return null;
     }
 
     public void refreshUrl(){
     }
 
-    public ArrayList<String> getNewsUrl() {
-        return newsUrl;
-    }
 }
