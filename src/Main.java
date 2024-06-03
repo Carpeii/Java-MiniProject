@@ -17,16 +17,17 @@ public class Main {
             br = new BufferedReader(new InputStreamReader(url.openStream()));
             String line  = "";
             boolean flag = false;
+            boolean flag2 = false;
             while ((line = br.readLine()) != null) {
-                if(line.contains("<ul class=\"list_newsissue\">")){
+                if(line.contains("class=\"link_txt\" data-tiara-layer=\"article_main\"")){
                     flag = true;
                     continue;
                 }
-                if(line.contains("</ul>")){
+                if(line.contains("</a>")){
                     flag = false;
                 }
                 if(flag){
-                    System.out.println(line);
+                    System.out.println(line.trim());
                 }
             }
         } catch (MalformedURLException e) {
