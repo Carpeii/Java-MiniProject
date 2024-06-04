@@ -34,15 +34,15 @@ public class Main {
         try {
             JSONArray arr = (JSONArray) parser.parse(sb.toString());
             JSONObject obj = (JSONObject) arr.get(0);
-            JSONObject obj2 = (JSONObject) arr.get(1);
             String name = obj.get("name").toString();
-            System.out.println(name);
+//            System.out.println(name);
 //            System.out.println(obj);
 //            System.out.println(arr);
 
             for (int i = 0; i < arr.size(); i++) {
                 JSONObject data = (JSONObject) arr.get(i);
-                System.out.println(data);
+//                System.out.println(data);
+                System.out.println(obj.get("name"));
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
