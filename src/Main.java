@@ -1,3 +1,7 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,29 +26,26 @@ public class Main {
         }
         return sb;
     }
-    public static void main(String[] args){
-        StringBuilder sb = readFile("./data.xml");
+    public static void main(String[] args) {
+        StringBuilder sb = readFile("./data.json");
+        JSONParser parser = new JSONParser();
 
-        Document doc = Jsoup.parse(sb.toString());
 
-        Elements names = doc.getElementsByTag("book");
-        Elements titles = doc.getElementsByTag("title");
-        Elements authors = doc.getElementsByTag("author");
-        Elements years = doc.getElementsByTag("year");
-        Elements prices = doc.getElementsByTag("price");
+        try {
+            JSONArray arr = (JSONArray) parser.parse(sb.toString());
+            JSONObject obj = (JSONObject) arr.get(0);
+            JSONObject obj2 = (JSONObject) arr.get(1);
+            String name = obj.get("name").toString();
+            System.out.println(name);
+//            System.out.println(obj);
+//            System.out.println(arr);
 
-        for (int i = 0; i < names.size(); i++) {
-            Element name = names.get(i);
-            Element title = titles.get(i);
-            Element author = authors.get(i);
-            Element year = years.get(i);
-            Element price = prices.get(i);
-
-            System.out.println(name.text());
-            System.out.println(title.text());
-            System.out.println(author.text());
-            System.out.println(year.text());
-            System.out.println(price.text());
+            for (int i = 0; i < arr.size(); i++) {
+                JSONObject data = (JSONObject) arr.get(i);
+                System.out.println(data);
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 }
