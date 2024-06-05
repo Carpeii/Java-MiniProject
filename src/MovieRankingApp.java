@@ -38,7 +38,7 @@ public class MovieRankingApp extends JFrame {
                     tableModel.addRow(new Object[]{
                             movieRangkingScraper.getTitles().get(i).text(),
                             movieRangkingScraper.getRanks().get(i).text(),
-                            movieRangkingScraper.getAudiCnt().get(i).text()
+                            movieRangkingScraper.getRanks().get(i).text()
                     });
                 }
             }

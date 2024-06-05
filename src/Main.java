@@ -33,8 +33,6 @@ public class Main {
 
         try {
             JSONArray arr = (JSONArray) parser.parse(sb.toString());
-            JSONObject obj = (JSONObject) arr.get(0);
-            String name = obj.get("name").toString();
 //            System.out.println(name);
 //            System.out.println(obj);
 //            System.out.println(arr);
@@ -42,7 +40,10 @@ public class Main {
             for (int i = 0; i < arr.size(); i++) {
                 JSONObject data = (JSONObject) arr.get(i);
 //                System.out.println(data);
+                JSONObject obj = (JSONObject) arr.get(i);
                 System.out.println(obj.get("name"));
+                System.out.println(obj.get("author"));
+                System.out.println(obj.get("price"));
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
