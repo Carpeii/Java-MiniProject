@@ -24,7 +24,8 @@ public class AccountBookApp extends JFrame{
         signUpButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            
+                SignUpDialog signUpDialog = new SignUpDialog();
+                signUpDialog.setVisible(true);
             }
         });
 

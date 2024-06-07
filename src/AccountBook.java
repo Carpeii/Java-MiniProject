@@ -2,6 +2,10 @@ import javax.swing.*;
 
 public class AccountBook extends JFrame {
     private JPanel mainPanel;
+    private JButton refreshButton;
+    private JButton deleteButton;
+    private JButton createButton;
+    private JTable resultTable;
 
     public AccountBook() {
         setContentPane(mainPanel);
