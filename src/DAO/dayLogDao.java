@@ -1,5 +1,5 @@
 package DAO;
 
-public class dayLogDao {
+public class DayLogDao {
 }
 

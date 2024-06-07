@@ -1,4 +1,4 @@
 package DTO;
 
-public class detailLogDto {
+public class DetailLogDto {
 }

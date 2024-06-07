@@ -1,6 +1,6 @@
 package DTO;
 
-public class userDto {
+public class UserDto {
     private String id;
     private String password;
     private String name;

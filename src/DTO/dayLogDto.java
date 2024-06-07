@@ -1,4 +1,4 @@
 package DTO;
 
-public class dayLogDto {
+public class DayLogDto {
 }
