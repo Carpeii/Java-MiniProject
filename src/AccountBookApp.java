@@ -1,3 +1,5 @@
+import DAO.UserDao;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -6,8 +8,8 @@ public class AccountBookApp extends JFrame{
     private JPanel mainPanel;
     private JLabel appTitleLabel;
     private JPanel loginPanel;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField idTextField;
+    private JTextField passwordTextField;
     private JButton loginButton;
     private JButton signUpButton;
     private JLabel idLabel;
@@ -32,8 +34,16 @@ public class AccountBookApp extends JFrame{
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setVisible(false);
-                new AccountBook().setVisible(true);
+                String id = idTextField.getText();
+                String password = passwordTextField.getText();
+                if(!id.isEmpty() && !password.isEmpty()){
+                    UserDao  userDao = new UserDao();
+
+                    if(userDao.login(id, password)){
+                        setVisible(false);
+                        new AccountBook(idTextField.getText(), passwordTextField.getText()).setVisible(true);
+                    }
+                }
             }
         });
     }

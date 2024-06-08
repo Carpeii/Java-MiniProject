@@ -2,12 +2,11 @@ import javax.swing.*;
 
 public class AccountBook extends JFrame {
     private JPanel mainPanel;
-    private JButton refreshButton;
-    private JButton deleteButton;
-    private JButton createButton;
-    private JTable resultTable;
 
-    public AccountBook() {
+    private String id;
+    private String name;
+
+    public AccountBook(String id, String name) {
         setContentPane(mainPanel);
         setTitle("가계부 입니다");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -15,5 +14,13 @@ public class AccountBook extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
+
+        this.id = id;
+        this.name = name;
+
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
