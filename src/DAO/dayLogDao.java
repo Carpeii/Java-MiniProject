@@ -3,6 +3,7 @@ package DAO;
 import DTO.DayLogDto;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DayLogDao {
     private Connection conn;
@@ -19,6 +20,32 @@ public class DayLogDao {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<DayLogDto> getDayLogArrayList(){
+        ArrayList<DayLogDto> dayLogDtoArrayList = new ArrayList<>();
+
+        PreparedStatement pstmt = null;
+        String sql = "SELECT * FROM day_log";
+
+        try {
+            pstmt = this.conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                DayLogDto to = new DayLogDto();
+                to.setId(rs.getInt("id"));
+                to.setUserId(rs.getString("u_id"));
+                to.setDate(rs.getDate("date"));
+                to.setType(rs.getInt("type"));
+                to.setMoney(rs.getInt("money"));
+                to.setDescription(rs.getString("description"));
+
+                dayLogDtoArrayList.add(to);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dayLogDtoArrayList;
     }
 
     public boolean insertIncomeDayLog(String userId, String date, String income){

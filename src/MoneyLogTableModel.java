@@ -1,3 +1,4 @@
+import DAO.DayLogDao;
 import DTO.DayLogDto;
 
 import javax.swing.table.AbstractTableModel;
@@ -7,9 +8,9 @@ public class MoneyLogTableModel extends AbstractTableModel {
     private ArrayList<DayLogDto> datas;
     private String[] columnNames = {"date", "type", "money", "description"};
 
-    public MoneyLogTableModel() {
-        DayLogDto detailLogDao = new DayLogDto();
-//        datas = detailLogDao.getDetalLogDtoArray();
+    public MoneyLogTableModel(String userId) {
+        DayLogDao dayLogDao = new DayLogDao();
+        datas = dayLogDao.getDayLogArrayList();
     }
     @Override
     public int getRowCount() {
@@ -23,28 +24,28 @@ public class MoneyLogTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-//        DayLogDto detailLogDto = datas.get(rowIndex);
-//
+        DayLogDto dayLogDto = datas.get(rowIndex);
+
         String result = "";
-//
-//        switch (columnIndex) {
-//            case 0:
-//                result = "test";
-//                break;
-//            case 1:
-//                if (detailLogDto.getType() == 0) {
-//                    result = "지출";
-//                } else {
-//                    result = "수입";
-//                }
-//                break;
-//            case 2:
-//                result = Integer.toString(detailLogDto.getMoney());
-//                break;
-//            case 3:
-//                result = detailLogDto.getDescription();
-//                break;
-//        }
+
+        switch (columnIndex) {
+            case 0:
+                result = dayLogDto.getDate().toString();
+                break;
+            case 1:
+                if (dayLogDto.getType() == 0) {
+                    result = "지출";
+                } else {
+                    result = "수입";
+                }
+                break;
+            case 2:
+                result = Integer.toString(dayLogDto.getMoney());
+                break;
+            case 3:
+                result = dayLogDto.getDescription();
+                break;
+        }
         return result;
     }
 }

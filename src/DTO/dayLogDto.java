@@ -5,10 +5,10 @@ import java.sql.Date;
 public class DayLogDto {
     private int id;
     private String userId;
-    private String date;
-    private int income;
-    private int expense;
-
+    private Date date;
+    private int type; // 0은 지출 1은 수입
+    private int money;
+    private String description;
 
     public int getId() {
         return id;
@@ -26,28 +26,35 @@ public class DayLogDto {
         this.userId = userId;
     }
 
-
-    public int getIncome() {
-        return income;
-    }
-
-    public void setIncome(int income) {
-        this.income = income;
-    }
-
-    public int getExpense() {
-        return expense;
-    }
-
-    public void setExpense(int expense) {
-        this.expense = expense;
-    }
-
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
