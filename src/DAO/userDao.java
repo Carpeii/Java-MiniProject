@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class UserDao {
     private Connection conn;
-    private UserDto userDto = new UserDto();
+    private UserDto userDto;
     String url = "jdbc:mysql://localhost:3306/account_book";
     String user = "root";
     String password = "1234";
@@ -14,6 +14,7 @@ public class UserDao {
     public UserDao(){
         try {
             this.conn = DriverManager.getConnection(url,user,password);
+            userDto = new UserDto();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -71,4 +72,7 @@ public class UserDao {
         return isSuccess;
     }
 
+    public UserDto getUser() {
+        return userDto;
+    }
 }

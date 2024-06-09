@@ -40,7 +40,7 @@ public class AccountBookApp extends JFrame{
                 if(!id.isEmpty() && !password.isEmpty()){
                     UserDao  userDao = new UserDao();
                     if(userDao.login(id, password)){
-                        UserDto userDto = new UserDto();
+                        UserDto userDto = userDao.getUser();
                         setVisible(false);
                         new AccountBook(userDto).setVisible(true);
                     }

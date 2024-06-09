@@ -1,3 +1,5 @@
+import DAO.DayLogDao;
+import DAO.UserDao;
 import DTO.UserDto;
 
 import javax.swing.*;
@@ -25,10 +27,10 @@ public class AccountBook extends JFrame {
     private JTextField monthTextField;
     private JTextField yearTextField;
     private JTextField dayTextField;
+    private JLabel userNameLabel;
 
     private UserDto userDto;
     public AccountBook(UserDto userDto) {
-        this.userDto = new UserDto();
         this.userDto = userDto;
 
         setContentPane(mainPanel);
@@ -38,12 +40,63 @@ public class AccountBook extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
+        ButtonGroup buttonGroup = new ButtonGroup();
+
+        buttonGroup.add(expenseRadioButton);
+        buttonGroup.add(incomeRadioButton);
+
+        expenseRadioButton.setSelected(true);
+
+        userNameLabel.setText(userDto.getName());
 
         refreshButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //resultTable
                 resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+            }
+        });
+
+        insertButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!moneyTextField.getText().isEmpty()
+                        && !yearTextField.getText().isEmpty()
+                        && !monthTextField.getText().isEmpty()
+                        && !dayTextField.getText().isEmpty()) {
+                    DayLogDao dayLogDao = new DayLogDao();
+                    if(expenseRadioButton.isSelected()) {
+                        //TODO 날짜 체크할수 있게끔하기
+                        String date = "2024-06-04";
+                        if(dayLogDao.insertExpenseDayLog(
+                                userDto.getId(),
+                                date,
+                                moneyTextField.getText(),
+                                descriptionTextField.getText())){
+                            moneyTextField.setText("");
+                            System.out.println("insert 지출 성공");
+                        }
+                    }
+                    else{
+                        String date = "2024-06-04";
+                        //TODO dayLogDao.insertIncomeDayLog 이함수도 expense 함수처럼 바꿔두기
+                        if(dayLogDao.insertIncomeDayLog(
+                                userDto.getId(),
+                                date, moneyTextField.getText(),
+                                descriptionTextField.getText())){
+                            moneyTextField.setText("");
+                            System.out.println("insert 수입 성공");
+                        }
+                    }
+                }
+            }
+        });
+
+        //TODO 테이블 선택해서 삭제하는거 만들기
+        deleteButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
             }
         });
     }

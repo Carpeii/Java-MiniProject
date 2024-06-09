@@ -48,15 +48,16 @@ public class DayLogDao {
         return dayLogDtoArrayList;
     }
 
-    public boolean insertIncomeDayLog(String userId, String date, String income){
+    public boolean insertIncomeDayLog(String userId, String date, String money, String description){
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO day_log (u_id, date, income) values(?,?,?);";
+        String sql = "INSERT INTO day_log (u_id, date, money, description) values(?,?,?,?);";
         boolean isSuccess = false;
         try {
             pstmt = this.conn.prepareStatement(sql);
             pstmt.setString(1,userId);
             pstmt.setString(2,date);
-            pstmt.setString(3,income);
+            pstmt.setInt(3,Integer.parseInt(money));
+            pstmt.setString(4,description);
 
             int rowInserted = pstmt.executeUpdate();
             if(rowInserted>0){
@@ -72,16 +73,19 @@ public class DayLogDao {
     }
 
 
-    public boolean insertExpenseDayLog(String userId, String date, String expense){
+    public boolean insertExpenseDayLog(String userId, String date, String money, String description){
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO day_log (u_id, date, expense) values(?,?,?);";
+        String sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ? , ?);";
+
         boolean isSuccess = false;
         try {
             pstmt = this.conn.prepareStatement(sql);
             pstmt.setString(1,userId);
             pstmt.setString(2,date);
-            pstmt.setString(3,expense);
-
+            pstmt.setInt(3,0);
+            pstmt.setInt(4,Integer.parseInt(money));
+            pstmt.setString(5,description);
+            System.out.println(pstmt.toString());
             int rowInserted = pstmt.executeUpdate();
             if(rowInserted>0){
                 isSuccess = true;
