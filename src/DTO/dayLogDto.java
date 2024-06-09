@@ -5,7 +5,7 @@ import java.sql.Date;
 public class DayLogDto {
     private int id;
     private String userId;
-    private Date date;
+    private String date;
     private int income;
     private int expense;
 
@@ -26,13 +26,6 @@ public class DayLogDto {
         this.userId = userId;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public int getIncome() {
         return income;
@@ -50,4 +43,11 @@ public class DayLogDto {
         this.expense = expense;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

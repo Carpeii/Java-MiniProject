@@ -1,6 +1,8 @@
 import DTO.UserDto;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AccountBook extends JFrame {
 
@@ -13,7 +15,7 @@ public class AccountBook extends JFrame {
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JButton refreshButton;
-    private JTable table1;
+    private JTable resultTable;
     private JTextField moneyTextField;
     private JTextField descriptionTextField;
     private JButton insertButton;
@@ -24,15 +26,11 @@ public class AccountBook extends JFrame {
     private JTextField yearTextField;
     private JTextField dayTextField;
 
-    public AccountBook() {
-        init();
-    }
-
+    private UserDto userDto;
     public AccountBook(UserDto userDto) {
-        init();
-    }
+        this.userDto = new UserDto();
+        this.userDto = userDto;
 
-    public void init(){
         setContentPane(mainPanel);
         setTitle("가계부");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,11 +39,12 @@ public class AccountBook extends JFrame {
         setVisible(true);
         setResizable(false);
 
-//        for(int year = 2020; year < 2040; year++){}
-//        yearComboBox.addItem();
-    }
-
-    public static void main(String[] args) {
-        new AccountBook();
+        refreshButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //resultTable
+                resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+            }
+        });
     }
 }
