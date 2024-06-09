@@ -1,4 +1,5 @@
 import DAO.UserDao;
+import DTO.UserDto;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -38,10 +39,10 @@ public class AccountBookApp extends JFrame{
                 String password = passwordTextField.getText();
                 if(!id.isEmpty() && !password.isEmpty()){
                     UserDao  userDao = new UserDao();
-
                     if(userDao.login(id, password)){
+                        UserDto userDto = new UserDto();
                         setVisible(false);
-                        new AccountBook(idTextField.getText(), passwordTextField.getText()).setVisible(true);
+                        new AccountBook(userDto).setVisible(true);
                     }
                 }
             }

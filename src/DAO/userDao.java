@@ -5,7 +5,7 @@ import DTO.UserDto;
 import java.sql.*;
 
 public class UserDao {
-    private Connection con;
+    private Connection conn;
     private UserDto userDto = new UserDto();
     String url = "jdbc:mysql://localhost:3306/account_book";
     String user = "root";
@@ -13,7 +13,7 @@ public class UserDao {
 
     public UserDao(){
         try {
-            this.con = DriverManager.getConnection(url,user,password);
+            this.conn = DriverManager.getConnection(url,user,password);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class UserDao {
         PreparedStatement pstmt = null;
         String sql = "INSERT INTO user (u_id, u_password, u_name) VALUES (?, ?, ?);";
         try {
-            pstmt = this.con.prepareStatement(sql);
+            pstmt = this.conn.prepareStatement(sql);
             pstmt.setString(1, id);
             pstmt.setString(2, password);
             pstmt.setString(3, name);
@@ -48,7 +48,7 @@ public class UserDao {
 
         try {
             String sql = "SELECT * FROM user WHERE u_id = ? AND u_password = ?";
-            PreparedStatement pstmt = this.con.prepareStatement(sql);
+            PreparedStatement pstmt = this.conn.prepareStatement(sql);
 
             pstmt.setString(1, userId);
             pstmt.setString(2, password);
@@ -58,6 +58,9 @@ public class UserDao {
             if (rs.next()) {
                 isSuccess = true;
                 System.out.println("로그인 성공!");
+                userDto.setId(rs.getString("u_id"));
+                userDto.setPassword(rs.getString("u_password"));
+                userDto.setName(rs.getString("u_name"));
             } else {
                 System.out.println("로그인 실패.");
             }
@@ -65,7 +68,6 @@ public class UserDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return isSuccess;
     }
 
