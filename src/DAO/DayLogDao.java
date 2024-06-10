@@ -157,12 +157,31 @@ public class DayLogDao {
         return isSuccess;
     }
 
-    //TODO MODIFY하는거 추가하기
-    public boolean updateDayLog(DayLogDto toModify){
+    //TODO Update 추가하기
+    public boolean updateDayLog(DayLogDto toUpdate, Date date, int type, int money, String description, int categoryId){
         boolean isSuccess = false;
 
-        String sql = "UPDATE day_log SET category_id = ? WHERE id = ?;";
+        String sql = "UPDATE day_log SET date = ?, type=?,money=?,description=?, category_id = ?  WHERE id = ?;";
+        PreparedStatement pstmt = null;
 
+        try {
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
+            pstmt.setString(1,date.toString());
+            pstmt.setInt(2,type);
+            pstmt.setInt(3,money);
+            pstmt.setString(4,description);
+            pstmt.setInt(5,categoryId);
+            pstmt.setInt(6,toUpdate.getId());
+
+            int rowChanged = pstmt.executeUpdate();
+            if(rowChanged>0){
+                isSuccess = true;
+            }else{
+                isSuccess = false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return isSuccess;
     }
 }
