@@ -1,4 +1,6 @@
+import DAO.CategoryDao;
 import DAO.DayLogDao;
+import DTO.CategoryDto;
 import DTO.DayLogDto;
 import DTO.UserDto;
 
@@ -31,6 +33,8 @@ public class AccountBook extends JFrame {
     private JRadioButton incomeRadioButton;
     private JLabel userNameLabel;
     private JTextField dateTextField;
+    private JComboBox categoryComboBox;
+    private JButton addCategoryButton;
 
     private UserDto userDto;
 
@@ -65,8 +69,8 @@ public class AccountBook extends JFrame {
         buttonGroup.add(incomeRadioButton);
 
         expenseRadioButton.setSelected(true);
-
         userNameLabel.setText(userDto.getName());
+        refreshCategoryComboBox();
 
         refreshButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -83,6 +87,7 @@ public class AccountBook extends JFrame {
                     DayLogDao dayLogDao = new DayLogDao();
                     if(expenseRadioButton.isSelected()) {
                         String date = dateTextField.getText();
+
                         if(dayLogDao.insertExpenseDayLog(userDto.getId(), date, moneyTextField.getText(), descriptionTextField.getText())){
                             moneyTextField.setText("");
                             descriptionTextField.setText("");
@@ -102,15 +107,14 @@ public class AccountBook extends JFrame {
                 }
             }
         });
-
-        //TODO 테이블 선택해서 삭제하는거 만들기
+        
         deleteButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int  selectRow = resultTable.getSelectedRow();
                 if(selectRow != -1) {
                     DayLogDao dayLogDao = new DayLogDao();
-                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList();
+                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList(userDto.getId());
                     DayLogDto toDelete = datas.get(selectRow);
                     dayLogDao.deleteDayLog(toDelete);
                     resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
@@ -138,5 +142,26 @@ public class AccountBook extends JFrame {
                 }
             }
         });
+
+    }
+
+    public void refreshCategoryComboBox(){
+        categoryComboBox.removeAllItems();
+
+        CategoryDao categoryDao = new CategoryDao();
+        ArrayList<CategoryDto> categories = categoryDao.getCategories(userDto.getId());
+        categoryComboBox.addItem("없음");
+        for (CategoryDto category : categories) {
+            categoryComboBox.addItem(category.getName());
+        }
+    }
+    public CategoryDto getCategoryComboBoxItem(){
+        if(categoryComboBox.getSelectedIndex() == 0){
+            return null;
+        }else{
+            CategoryDao categoryDao = new CategoryDao();
+            CategoryDto category = categoryDao.getCategory(userDto.getId(), categoryComboBox.getSelectedItem().toString());
+            return category;
+        }
     }
 }

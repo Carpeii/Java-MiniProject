@@ -10,7 +10,7 @@ public class MoneyLogTableModel extends AbstractTableModel {
 
     public MoneyLogTableModel(String userId) {
         DayLogDao dayLogDao = new DayLogDao();
-        datas = dayLogDao.getDayLogArrayList();
+        datas = dayLogDao.getDayLogArrayList(userId);
     }
     @Override
     public int getRowCount() {

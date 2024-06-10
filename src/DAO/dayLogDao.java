@@ -1,5 +1,6 @@
 package DAO;
 
+import DTO.CategoryDto;
 import DTO.DayLogDto;
 
 import java.sql.*;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public class DayLogDao {
     private Connection conn;
-    private DayLogDto dayLogDto = new DayLogDto();
+    private DayLogDto dayLogDto;
 
     String url = "jdbc:mysql://localhost:3306/account_book";
     String user = "root";
@@ -21,14 +22,15 @@ public class DayLogDao {
             e.printStackTrace();
         }
     }
-    public ArrayList<DayLogDto> getDayLogArrayList(){
+    public ArrayList<DayLogDto> getDayLogArrayList(String userId){
         ArrayList<DayLogDto> dayLogDtoArrayList = new ArrayList<>();
-
+        //TODO WHERE user_id 추가
         PreparedStatement pstmt = null;
-        String sql = "SELECT * FROM day_log";
+        String sql = "SELECT * FROM day_log WHERE u_id = ?;";
 
         try {
             pstmt = this.conn.prepareStatement(sql);
+            pstmt.setString(1,userId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
