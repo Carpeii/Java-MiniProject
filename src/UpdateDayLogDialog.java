@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class ModifyDayLogDialog extends JDialog {
+public class UpdateDayLogDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -19,7 +19,7 @@ public class ModifyDayLogDialog extends JDialog {
     private JComboBox typeComboBox;
     private DialogClosedListener listener;
     private DayLogDto dayLogDto;
-    public ModifyDayLogDialog(DayLogDto dayLogDto, DialogClosedListener listener) {
+    public UpdateDayLogDialog(DayLogDto dayLogDto, DialogClosedListener listener) {
         this.dayLogDto = dayLogDto;
         setContentPane(contentPane);
         setBounds(12,10,1000,100);

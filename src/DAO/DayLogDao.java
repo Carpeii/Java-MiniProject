@@ -158,8 +158,10 @@ public class DayLogDao {
     }
 
     //TODO MODIFY하는거 추가하기
-    public boolean modifyDayLog(DayLogDto toModify){
+    public boolean updateDayLog(DayLogDto toModify){
         boolean isSuccess = false;
+
+        String sql = "UPDATE day_log SET category_id = ? WHERE id = ?;";
 
         return isSuccess;
     }

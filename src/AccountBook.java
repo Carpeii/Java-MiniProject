@@ -162,7 +162,7 @@ public class AccountBook extends JFrame {
                     DayLogDao dayLogDao = new DayLogDao();
                     ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList(userDto.getId());
                     DayLogDto toModify = datas.get(selectRow);
-                    ModifyDayLogDialog categoryDialog = new ModifyDayLogDialog(toModify, new DialogClosedListener() {
+                    UpdateDayLogDialog categoryDialog = new UpdateDayLogDialog(toModify, new DialogClosedListener() {
                         @Override
                         public void dialogClosed() {
                             resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
