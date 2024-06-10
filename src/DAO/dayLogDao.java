@@ -156,5 +156,12 @@ public class DayLogDao {
         }
         return isSuccess;
     }
+
+    //TODO MODIFY하는거 추가하기
+    public boolean modifyDayLog(CategoryDto toModify){
+        boolean isSuccess = false;
+
+        return isSuccess;
+    }
 }
 

@@ -32,6 +32,7 @@ public class AccountBook extends JFrame {
     private JTextField dateTextField;
     private JComboBox categoryComboBox;
     private JButton settingCategoryButton;
+    private JButton modifyButton;
 
     private UserDto userDto;
     public boolean isValidDate() {
@@ -152,6 +153,19 @@ public class AccountBook extends JFrame {
             }
         });
 
+        modifyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int  selectRow = resultTable.getSelectedRow();
+                if(selectRow != -1) {
+//                    DayLogDao dayLogDao = new DayLogDao();
+//                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList(userDto.getId());
+//                    DayLogDto toDelete = datas.get(selectRow);
+//                    dayLogDao.deleteDayLog(toDelete);
+//                    resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+                }
+            }
+        });
     }
 
     public void refreshCategoryComboBox(){
