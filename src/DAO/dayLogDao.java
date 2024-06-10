@@ -50,14 +50,15 @@ public class DayLogDao {
 
     public boolean insertIncomeDayLog(String userId, String date, String money, String description){
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO day_log (u_id, date, money, description) values(?,?,?,?);";
+        String sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ?, ?);";
         boolean isSuccess = false;
         try {
             pstmt = this.conn.prepareStatement(sql);
             pstmt.setString(1,userId);
             pstmt.setString(2,date);
-            pstmt.setInt(3,Integer.parseInt(money));
-            pstmt.setString(4,description);
+            pstmt.setInt(3,1);
+            pstmt.setInt(4,Integer.parseInt(money));
+            pstmt.setString(5,description);
 
             int rowInserted = pstmt.executeUpdate();
             if(rowInserted>0){
@@ -75,7 +76,7 @@ public class DayLogDao {
 
     public boolean insertExpenseDayLog(String userId, String date, String money, String description){
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ? , ?);";
+        String sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ?, ?);";
 
         boolean isSuccess = false;
         try {
