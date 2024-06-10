@@ -58,6 +58,18 @@ public class ModifyDayLogDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         setInfo();
+        dateTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || c == '-' || c == '/')) {
+                    e.consume();  // 입력을 무시합니다
+                }
+                if(dateTextField.getText().length() >= 8) {
+                    e.consume();
+                }
+            }
+        });
     }
 
     private void onOK() {
