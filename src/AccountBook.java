@@ -1,10 +1,12 @@
 import DAO.DayLogDao;
 import DAO.UserDao;
+import DTO.DayLogDto;
 import DTO.UserDto;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class AccountBook extends JFrame {
 
@@ -96,7 +98,14 @@ public class AccountBook extends JFrame {
         deleteButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                int  selectRow = resultTable.getSelectedRow();
+                if(selectRow != -1) {
+                    DayLogDao dayLogDao = new DayLogDao();
+                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList();
+                    DayLogDto toDelete = datas.get(selectRow);
+                    dayLogDao.deleteDayLog(toDelete);
+                    resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+                }
             }
         });
     }

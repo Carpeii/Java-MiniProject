@@ -98,5 +98,25 @@ public class DayLogDao {
         }
         return isSuccess;
     }
+
+    public boolean deleteDayLog(DayLogDto toDelete) {
+        boolean isSuccess = false;
+        String sql = "DELETE FROM day_log WHERE id = ?;";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = this.conn.prepareStatement(sql);
+            pstmt.setInt(1,toDelete.getId());
+            int rowDeleted = pstmt.executeUpdate();
+            if(rowDeleted>0){
+                isSuccess = true;
+            }else{
+                isSuccess = false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isSuccess;
+    }
 }
 
