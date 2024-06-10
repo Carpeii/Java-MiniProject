@@ -1,10 +1,14 @@
 import DAO.CategoryDao;
+import DAO.DayLogDao;
 import DTO.CategoryDto;
 import DTO.DayLogDto;
 import util.DialogClosedListener;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class UpdateDayLogDialog extends JDialog {
@@ -61,19 +65,32 @@ public class UpdateDayLogDialog extends JDialog {
         dateTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || c == '-' || c == '/')) {
-                    e.consume();  // 입력을 무시합니다
-                }
-                if(dateTextField.getText().length() >= 8) {
-                    e.consume();
-                }
+//                char c = e.getKeyChar();
+//                if (!(Character.isDigit(c) || c == '-' || c == '/')) {
+//                    e.consume();  // 입력을 무시합니다
+//                }
+//                if(dateTextField.getText().length() >= 8) {
+//                    e.consume();
+//                }
             }
         });
     }
 
     private void onOK() {
         // add your code here
+        DayLogDao dayLogDao = new DayLogDao();
+        CategoryDao categoryDao = new CategoryDao();
+
+
+        dayLogDao.updateDayLog(
+                dayLogDto,
+                Date.valueOf(dateTextField.getText()),
+                typeComboBox.getSelectedIndex(),
+                Integer.parseInt(moneyTextField.getText()),
+                descriptionTextField.getText(),
+                categoryDao.getCategory(dayLogDto.getUserId(), categoryComboBox.getSelectedItem().toString()).getId()
+        );
+        
         dispose();
     }
 
@@ -102,5 +119,4 @@ public class UpdateDayLogDialog extends JDialog {
             categoryComboBox.addItem(category.getName());
         }
     }
-
 }

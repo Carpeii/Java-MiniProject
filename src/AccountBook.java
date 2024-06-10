@@ -32,7 +32,7 @@ public class AccountBook extends JFrame {
     private JTextField dateTextField;
     private JComboBox categoryComboBox;
     private JButton settingCategoryButton;
-    private JButton modifyButton;
+    private JButton updateButton;
 
     private UserDto userDto;
     public boolean isValidDate() {
@@ -153,7 +153,7 @@ public class AccountBook extends JFrame {
             }
         });
 
-        modifyButton.addMouseListener(new MouseAdapter() {
+        updateButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int  selectRow = resultTable.getSelectedRow();

@@ -4,6 +4,7 @@ import DTO.CategoryDto;
 import DTO.DayLogDto;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DayLogDao {
@@ -163,10 +164,10 @@ public class DayLogDao {
 
         String sql = "UPDATE day_log SET date = ?, type=?,money=?,description=?, category_id = ?  WHERE id = ?;";
         PreparedStatement pstmt = null;
-
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         try {
             pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
-            pstmt.setString(1,date.toString());
+            pstmt.setDate(1, date);
             pstmt.setInt(2,type);
             pstmt.setInt(3,money);
             pstmt.setString(4,description);
