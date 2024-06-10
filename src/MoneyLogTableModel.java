@@ -1,3 +1,4 @@
+import DAO.CategoryDao;
 import DAO.DayLogDao;
 import DTO.DayLogDto;
 
@@ -6,9 +7,10 @@ import java.util.ArrayList;
 
 public class MoneyLogTableModel extends AbstractTableModel {
     private ArrayList<DayLogDto> datas;
-    private String[] columnNames = {"date", "type", "money", "description"};
-
+    private String[] columnNames = {"date", "category","type", "money", "description"};
+    private String userId;
     public MoneyLogTableModel(String userId) {
+        this.userId = userId;
         DayLogDao dayLogDao = new DayLogDao();
         datas = dayLogDao.getDayLogArrayList(userId);
     }
@@ -19,13 +21,13 @@ public class MoneyLogTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DayLogDto dayLogDto = datas.get(rowIndex);
-
+        CategoryDao categoryDao = new CategoryDao();
         String result = "";
 
         switch (columnIndex) {
@@ -33,16 +35,24 @@ public class MoneyLogTableModel extends AbstractTableModel {
                 result = dayLogDto.getDate().toString();
                 break;
             case 1:
+                System.out.println(dayLogDto.getCategoryId());
+                if(categoryDao.getCategory(dayLogDto.getCategoryId()) ==null){
+                    result = "";
+                }else{
+                    result = String.valueOf(categoryDao.getCategory(dayLogDto.getCategoryId()).getName());
+                }
+                break;
+            case 2:
                 if (dayLogDto.getType() == 0) {
                     result = "지출";
                 } else {
                     result = "수입";
                 }
                 break;
-            case 2:
+            case 3:
                 result = Integer.toString(dayLogDto.getMoney());
                 break;
-            case 3:
+            case 4:
                 result = dayLogDto.getDescription();
                 break;
         }

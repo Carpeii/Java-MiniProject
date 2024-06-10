@@ -9,6 +9,7 @@ public class DayLogDto {
     private int type; // 0은 지출 1은 수입
     private int money;
     private String description;
+    private int categoryId;
 
     public int getId() {
         return id;
@@ -56,5 +57,13 @@ public class DayLogDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

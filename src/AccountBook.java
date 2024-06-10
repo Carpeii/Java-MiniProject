@@ -83,12 +83,15 @@ public class AccountBook extends JFrame {
         insertButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+//                if(getCategoryComboBoxItem() == null){
+//
+//                }
                 if(!moneyTextField.getText().isEmpty() && isValidDate()){
                     DayLogDao dayLogDao = new DayLogDao();
                     if(expenseRadioButton.isSelected()) {
                         String date = dateTextField.getText();
 
-                        if(dayLogDao.insertExpenseDayLog(userDto.getId(), date, moneyTextField.getText(), descriptionTextField.getText())){
+                        if(dayLogDao.insertExpenseDayLog(userDto.getId(), date, moneyTextField.getText(), descriptionTextField.getText(), getCategoryComboBoxItem())){
                             moneyTextField.setText("");
                             descriptionTextField.setText("");
                             System.out.println("insert 지출 성공");
@@ -97,7 +100,7 @@ public class AccountBook extends JFrame {
                     }
                     else{
                         String date = dateTextField.getText();
-                        if(dayLogDao.insertIncomeDayLog(userDto.getId(), date, moneyTextField.getText(), descriptionTextField.getText())){
+                        if(dayLogDao.insertIncomeDayLog(userDto.getId(), date, moneyTextField.getText(), descriptionTextField.getText(), getCategoryComboBoxItem())){
                             moneyTextField.setText("");
                             descriptionTextField.setText("");
                             System.out.println("insert 수입 성공");
@@ -107,7 +110,7 @@ public class AccountBook extends JFrame {
                 }
             }
         });
-        
+
         deleteButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -155,6 +158,7 @@ public class AccountBook extends JFrame {
             categoryComboBox.addItem(category.getName());
         }
     }
+
     public CategoryDto getCategoryComboBoxItem(){
         if(categoryComboBox.getSelectedIndex() == 0){
             return null;

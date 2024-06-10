@@ -92,7 +92,6 @@ public class CategoryDao {
     public CategoryDto getCategory(String userId, String name) {
         CategoryDto to = new CategoryDto();
 
-        boolean isSuccess = false;
         String sql = "SELECT * FROM categories WHERE u_id = ? AND name = ?;";
         PreparedStatement pstmt = null;
 
@@ -102,14 +101,42 @@ public class CategoryDao {
             pstmt.setString(2,name);
 
             ResultSet rs = pstmt.executeQuery();
-
-            to.setId(rs.getInt("id"));
-            to.setName(rs.getString("name"));
-            to.setUserId(rs.getString("u_id"));
+            if(rs.next()){
+                to.setId(rs.getInt("id"));
+                to.setName(rs.getString("name"));
+                to.setUserId(rs.getString("u_id"));
+                return to;
+            }else {
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return to;
+    }
+
+    public CategoryDto getCategory(int id) {
+        CategoryDto to = new CategoryDto();
+
+        String sql = "SELECT * FROM categories WHERE id = ?;";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = this.conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                to.setId(rs.getInt("id"));
+                to.setUserId(rs.getString("u_id"));
+                to.setName(rs.getString("name"));
+                return to;
+            }
+            else{
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
