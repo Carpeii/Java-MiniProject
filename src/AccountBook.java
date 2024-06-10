@@ -21,8 +21,6 @@ public class AccountBook extends JFrame {
     private JPanel insertPanel;
     private JPanel userInfoPanel;
     private JPanel searhPanel;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
     private JButton refreshButton;
     private JTable resultTable;
     private JTextField moneyTextField;

@@ -35,7 +35,6 @@ public class MoneyLogTableModel extends AbstractTableModel {
                 result = dayLogDto.getDate().toString();
                 break;
             case 1:
-                System.out.println(dayLogDto.getCategoryId());
                 if(categoryDao.getCategory(dayLogDto.getCategoryId()) ==null){
                     result = "";
                 }else{
