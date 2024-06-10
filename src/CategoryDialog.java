@@ -1,6 +1,7 @@
 import DAO.CategoryDao;
 import DAO.DayLogDao;
 import DTO.CategoryDto;
+import DTO.DayLogDto;
 import DTO.UserDto;
 import util.DialogClosedListener;
 
@@ -23,6 +24,7 @@ public class CategoryDialog extends JDialog {
     private DialogClosedListener listener;
     private UserDto userDto;
     public CategoryDialog(UserDto userDto, DialogClosedListener listener) {
+
         this.userDto = userDto;
         setContentPane(mainPanel);
         setBounds(12,10,560,500);

@@ -158,11 +158,17 @@ public class AccountBook extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int  selectRow = resultTable.getSelectedRow();
                 if(selectRow != -1) {
-//                    DayLogDao dayLogDao = new DayLogDao();
-//                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList(userDto.getId());
-//                    DayLogDto toDelete = datas.get(selectRow);
-//                    dayLogDao.deleteDayLog(toDelete);
-//                    resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+
+                    DayLogDao dayLogDao = new DayLogDao();
+                    ArrayList<DayLogDto> datas = dayLogDao.getDayLogArrayList(userDto.getId());
+                    DayLogDto toModify = datas.get(selectRow);
+                    ModifyDayLogDialog categoryDialog = new ModifyDayLogDialog(toModify, new DialogClosedListener() {
+                        @Override
+                        public void dialogClosed() {
+                            resultTable.setModel(new MoneyLogTableModel(userDto.getId()));
+                        }
+                    });
+                    categoryDialog.setVisible(true);
                 }
             }
         });

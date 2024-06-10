@@ -158,7 +158,7 @@ public class DayLogDao {
     }
 
     //TODO MODIFY하는거 추가하기
-    public boolean modifyDayLog(CategoryDto toModify){
+    public boolean modifyDayLog(DayLogDto toModify){
         boolean isSuccess = false;
 
         return isSuccess;

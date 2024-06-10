@@ -1,12 +1,31 @@
+import DAO.CategoryDao;
+import DTO.CategoryDto;
+import DTO.DayLogDto;
+import util.DialogClosedListener;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class ModifyDayLogDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JPanel modifyPanel;
+    private JTextField dateTextField;
+    private JTextField moneyTextField;
+    private JComboBox categoryComboBox;
+    private JTextField descriptionTextField;
+    private JComboBox typeComboBox;
+    private DialogClosedListener listener;
+    private DayLogDto dayLogDto;
+    public ModifyDayLogDialog(DayLogDto dayLogDto, DialogClosedListener listener) {
+        this.dayLogDto = dayLogDto;
+        setContentPane(contentPane);
+        setBounds(12,10,1000,100);
+        setResizable(false);
 
-    public ModifyDayLogDialog() {
+        this.listener = listener;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -37,6 +56,8 @@ public class ModifyDayLogDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        setInfo();
     }
 
     private void onOK() {
@@ -48,11 +69,26 @@ public class ModifyDayLogDialog extends JDialog {
         // add your code here if necessary
         dispose();
     }
+    public void setInfo(){
+        dateTextField.setText(dayLogDto.getDate().toString());
+        moneyTextField.setText(String.valueOf(dayLogDto.getMoney()));
+        descriptionTextField.setText(dayLogDto.getDescription());
 
-    public static void main(String[] args) {
-        ModifyDayLogDialog dialog = new ModifyDayLogDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        typeComboBox.removeAll();
+        typeComboBox.addItem("지출");
+        typeComboBox.addItem("수입");
+
+        refreshCategoryComboBox();
+
     }
+    public void refreshCategoryComboBox(){
+        categoryComboBox.removeAllItems();
+
+        CategoryDao categoryDao = new CategoryDao();
+        ArrayList<CategoryDto> categories = categoryDao.getCategories(dayLogDto.getUserId());
+        for (CategoryDto category : categories) {
+            categoryComboBox.addItem(category.getName());
+        }
+    }
+
 }
