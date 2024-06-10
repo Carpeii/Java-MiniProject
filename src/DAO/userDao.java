@@ -5,20 +5,10 @@ import DTO.UserDto;
 import java.sql.*;
 
 public class UserDao {
-    private Connection conn;
     private UserDto userDto;
-    String url = "jdbc:mysql://localhost:3306/account_book";
-    String user = "root";
-    String password = "1234";
 
     public UserDao(){
-        try {
-            this.conn = DriverManager.getConnection(url,user,password);
-            userDto = new UserDto();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        userDto = new UserDto();
     }
 
     public boolean signUp(String id, String password, String name){
@@ -26,7 +16,7 @@ public class UserDao {
         PreparedStatement pstmt = null;
         String sql = "INSERT INTO user (u_id, u_password, u_name) VALUES (?, ?, ?);";
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setString(1, id);
             pstmt.setString(2, password);
             pstmt.setString(3, name);
@@ -49,7 +39,7 @@ public class UserDao {
 
         try {
             String sql = "SELECT * FROM user WHERE u_id = ? AND u_password = ?";
-            PreparedStatement pstmt = this.conn.prepareStatement(sql);
+            PreparedStatement pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
 
             pstmt.setString(1, userId);
             pstmt.setString(2, password);

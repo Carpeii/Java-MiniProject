@@ -7,20 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DayLogDao {
-    private Connection conn;
     private DayLogDto dayLogDto;
 
-    String url = "jdbc:mysql://localhost:3306/account_book";
-    String user = "root";
-    String password = "1234";
-
     public DayLogDao() {
-        try {
-            this.conn = DriverManager.getConnection(url,user,password);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
     public ArrayList<DayLogDto> getDayLogArrayList(String userId){
         ArrayList<DayLogDto> dayLogDtoArrayList = new ArrayList<>();
@@ -29,7 +19,7 @@ public class DayLogDao {
         String sql = "SELECT * FROM day_log WHERE u_id = ?;";
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setString(1,userId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -58,7 +48,7 @@ public class DayLogDao {
         try {
             if(category == null){
                 sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ?, ?);";
-                pstmt = this.conn.prepareStatement(sql);
+                pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
                 pstmt.setString(1,userId);
                 pstmt.setString(2,date);
                 pstmt.setInt(3,1);
@@ -66,7 +56,7 @@ public class DayLogDao {
                 pstmt.setString(5,description);
             }else{
                 sql = "INSERT INTO day_log ( u_id, date, type, money, description, category_id) values(?, ?, ?, ?, ?, ?);";
-                pstmt = this.conn.prepareStatement(sql);
+                pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
                 pstmt.setString(1,userId);
                 pstmt.setString(2,date);
                 pstmt.setInt(3,1);
@@ -98,7 +88,7 @@ public class DayLogDao {
         try {
             if(category==null){
                 sql = "INSERT INTO day_log ( u_id, date, type, money, description) values(?, ?, ?, ?, ?);";
-                pstmt = this.conn.prepareStatement(sql);
+                pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
                 pstmt.setString(1,userId);
                 pstmt.setString(2,date);
                 pstmt.setInt(3,0);
@@ -106,7 +96,7 @@ public class DayLogDao {
                 pstmt.setString(5,description);
             }else{
                 sql = "INSERT INTO day_log ( u_id, date, type, money, description, category_id) values(?, ?, ?, ?, ?, ?);";
-                pstmt = this.conn.prepareStatement(sql);
+                pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
                 pstmt.setString(1,userId);
                 pstmt.setString(2,date);
                 pstmt.setInt(3,0);
@@ -133,7 +123,7 @@ public class DayLogDao {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setInt(1,toDelete.getId());
             int rowDeleted = pstmt.executeUpdate();
             if(rowDeleted>0){

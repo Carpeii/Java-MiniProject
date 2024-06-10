@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoryDao {
-    private Connection conn;
     private CategoryDto categoryDto;
 
     String url = "jdbc:mysql://localhost:3306/account_book";
@@ -15,11 +14,6 @@ public class CategoryDao {
     String password = "1234";
 
     public CategoryDao() {
-        try {
-            this.conn = DriverManager.getConnection(url,user,password);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public ArrayList<CategoryDto> getCategories(String userId) {
@@ -29,7 +23,7 @@ public class CategoryDao {
         String sql = "SELECT * FROM categories Where u_id=?;";
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setString(1,userId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -52,7 +46,7 @@ public class CategoryDao {
         String sql = "INSERT INTO categories ( u_id, name) values(?, ?);";
         boolean isSuccess = false;
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setString(1,userId);
             pstmt.setString(2,name);
 
@@ -75,7 +69,7 @@ public class CategoryDao {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setInt(1,toDelete.getId());
             int rowDeleted = pstmt.executeUpdate();
             if(rowDeleted>0){
@@ -96,7 +90,7 @@ public class CategoryDao {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setString(1,userId);
             pstmt.setString(2,name);
 
@@ -122,7 +116,7 @@ public class CategoryDao {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = this.conn.prepareStatement(sql);
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
             pstmt.setInt(1,id);
 
             ResultSet rs = pstmt.executeQuery();
