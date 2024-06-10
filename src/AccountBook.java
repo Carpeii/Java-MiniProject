@@ -5,10 +5,7 @@ import DTO.DayLogDto;
 import DTO.UserDto;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,10 +29,9 @@ public class AccountBook extends JFrame {
     private JLabel userNameLabel;
     private JTextField dateTextField;
     private JComboBox categoryComboBox;
-    private JButton addCategoryButton;
+    private JButton settingCategoryButton;
 
     private UserDto userDto;
-
     public boolean isValidDate() {
         if(dateTextField.getText().isEmpty()){
             return false;
@@ -70,6 +66,7 @@ public class AccountBook extends JFrame {
         userNameLabel.setText(userDto.getName());
         refreshCategoryComboBox();
 
+
         refreshButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -81,9 +78,6 @@ public class AccountBook extends JFrame {
         insertButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                if(getCategoryComboBoxItem() == null){
-//
-//                }
                 if(!moneyTextField.getText().isEmpty() && isValidDate()){
                     DayLogDao dayLogDao = new DayLogDao();
                     if(expenseRadioButton.isSelected()) {
@@ -141,6 +135,18 @@ public class AccountBook extends JFrame {
                 if(dateTextField.getText().length() >= 8) {
                     e.consume();
                 }
+            }
+        });
+        settingCategoryButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                InsertCategoryDialog insertCategoryDialog = new InsertCategoryDialog(userDto, new DialogClosedListener() {
+                    @Override
+                    public void dialogClosed() {
+                        refreshCategoryComboBox();
+                    }
+                });
+                insertCategoryDialog.setVisible(true);
             }
         });
 

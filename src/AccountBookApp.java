@@ -31,7 +31,6 @@ public class AccountBookApp extends JFrame{
                 signUpDialog.setVisible(true);
             }
         });
-
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -47,5 +46,6 @@ public class AccountBookApp extends JFrame{
                 }
             }
         });
+
     }
 }

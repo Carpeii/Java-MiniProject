@@ -1,3 +1,6 @@
+import DAO.CategoryDao;
+import DTO.UserDto;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -9,7 +12,10 @@ public class InsertCategoryDialog extends JDialog {
     private JButton addButton;
     private JLabel resultLabel;
 
-    public InsertCategoryDialog() {
+    private DialogClosedListener listener;
+
+    public InsertCategoryDialog(UserDto userDto, DialogClosedListener listener) {
+        this.listener = listener;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -40,13 +46,30 @@ public class InsertCategoryDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
+        resultLabel.setText(" ");
         addButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                System.out.println("clicked");
+                if (!nameTextField.getText().isEmpty()) {
+                    CategoryDao categoryDao = new CategoryDao();
+                    if (categoryDao.insertCategories(userDto.getId(), nameTextField.getText())) {
+                        resultLabel.setText(nameTextField.getText() + "를 카테고리에 추가했습니다");
+                        nameTextField.setText("");
+                    } else {
+                        resultLabel.setText("실패");
+                    }
+                }
             }
         });
+    }
+    @Override
+    public void dispose(){
+        super.dispose();
+        if (listener != null) {
+            listener.dialogClosed();
+        }
     }
 
     private void onOK() {
@@ -59,10 +82,4 @@ public class InsertCategoryDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        InsertCategoryDialog dialog = new InsertCategoryDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }
