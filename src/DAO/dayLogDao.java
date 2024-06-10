@@ -136,5 +136,25 @@ public class DayLogDao {
         }
         return isSuccess;
     }
+
+    public boolean changeCategoryNull(CategoryDto toChange){
+        boolean isSuccess = false;
+        String sql = "UPDATE day_log SET category_id = NULL WHERE category_id = ?;";
+        PreparedStatement pstmt = null;
+
+        try {
+            pstmt = DatabaseManager.getInstance().getConnection().prepareStatement(sql);
+            pstmt.setInt(1,toChange.getId());
+            int rowChanged = pstmt.executeUpdate();
+            if(rowChanged>0){
+                isSuccess = true;
+            }else{
+                isSuccess = false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isSuccess;
+    }
 }
 

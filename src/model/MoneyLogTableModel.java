@@ -1,3 +1,5 @@
+package model;
+
 import DAO.CategoryDao;
 import DAO.DayLogDao;
 import DTO.DayLogDto;

@@ -1,20 +1,33 @@
 import DAO.CategoryDao;
+import DAO.DayLogDao;
+import DTO.CategoryDto;
 import DTO.UserDto;
+import util.DialogClosedListener;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
-public class InsertCategoryDialog extends JDialog {
+public class CategoryDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField nameTextField;
     private JButton addButton;
     private JLabel resultLabel;
+    private JPanel mainPanel;
+    private JComboBox categoryComboBox;
+    private JButton deleteButton;
+    private JLabel deleteResultLabel;
 
     private DialogClosedListener listener;
+    private UserDto userDto;
+    public CategoryDialog(UserDto userDto, DialogClosedListener listener) {
+        this.userDto = userDto;
+        setContentPane(mainPanel);
+        setBounds(12,10,560,500);
+        setResizable(false);
 
-    public InsertCategoryDialog(UserDto userDto, DialogClosedListener listener) {
         this.listener = listener;
         setContentPane(contentPane);
         setModal(true);
@@ -60,10 +73,42 @@ public class InsertCategoryDialog extends JDialog {
                     } else {
                         resultLabel.setText("실패");
                     }
+                }else{
+                    resultLabel.setText("카테고리 입력해주세요");
                 }
             }
         });
+
+        deleteButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CategoryDao categoryDao = new CategoryDao();
+                DayLogDao dayLogDao = new DayLogDao();
+                System.out.println(categoryComboBox.getSelectedIndex());
+                CategoryDto to = categoryDao.getCategory(userDto.getId(), categoryComboBox.getSelectedItem().toString());
+
+                if( dayLogDao.changeCategoryNull(to)){
+                    if( categoryDao.deleteCategory(to)){
+                        refreshCategoryComboBox();
+                    }
+                }
+            }
+        });
+
+        refreshCategoryComboBox();
     }
+
+
+    public void refreshCategoryComboBox(){
+        categoryComboBox.removeAllItems();
+
+        CategoryDao categoryDao = new CategoryDao();
+        ArrayList<CategoryDto> categories = categoryDao.getCategories(userDto.getId());
+        for (CategoryDto category : categories) {
+            categoryComboBox.addItem(category.getName());
+        }
+    }
+
     @Override
     public void dispose(){
         super.dispose();

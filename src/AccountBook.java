@@ -3,6 +3,8 @@ import DAO.DayLogDao;
 import DTO.CategoryDto;
 import DTO.DayLogDto;
 import DTO.UserDto;
+import model.MoneyLogTableModel;
+import util.DialogClosedListener;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -140,7 +142,7 @@ public class AccountBook extends JFrame {
         settingCategoryButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                InsertCategoryDialog insertCategoryDialog = new InsertCategoryDialog(userDto, new DialogClosedListener() {
+                CategoryDialog insertCategoryDialog = new CategoryDialog(userDto, new DialogClosedListener() {
                     @Override
                     public void dialogClosed() {
                         refreshCategoryComboBox();

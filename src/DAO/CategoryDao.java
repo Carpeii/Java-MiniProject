@@ -109,6 +109,8 @@ public class CategoryDao {
         }
     }
 
+
+    //테이블 모델용
     public CategoryDto getCategory(int id) {
         CategoryDto to = new CategoryDto();
 
@@ -132,5 +134,11 @@ public class CategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public boolean setCategoryNull(CategoryDto toUpdate) {
+        boolean isSuccess = false;
+        DayLogDao dayLogDao = new DayLogDao();
+
+        return isSuccess;
     }
 }
