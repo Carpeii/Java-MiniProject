@@ -75,7 +75,13 @@ public class UpdateDayLogDialog extends JDialog {
             }
         });
     }
-
+    @Override
+    public void dispose(){
+        super.dispose();
+        if(listener != null){
+            listener.dialogClosed();
+        }
+    }
     private void onOK() {
         // add your code here
         DayLogDao dayLogDao = new DayLogDao();
@@ -90,7 +96,7 @@ public class UpdateDayLogDialog extends JDialog {
                 descriptionTextField.getText(),
                 categoryDao.getCategory(dayLogDto.getUserId(), categoryComboBox.getSelectedItem().toString()).getId()
         );
-        
+
         dispose();
     }
 

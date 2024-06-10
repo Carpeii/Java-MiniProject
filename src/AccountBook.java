@@ -66,7 +66,7 @@ public class AccountBook extends JFrame {
         buttonGroup.add(incomeRadioButton);
 
         expenseRadioButton.setSelected(true);
-        userNameLabel.setText(userDto.getName());
+        userNameLabel.setText("로그인 정보 : "+ userDto.getName());
         refreshCategoryComboBox();
 
 
