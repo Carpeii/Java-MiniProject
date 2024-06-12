@@ -106,6 +106,7 @@ public class CategoryDialog extends JDialog {
 
         CategoryDao categoryDao = new CategoryDao();
         ArrayList<CategoryDto> categories = categoryDao.getCategories(userDto.getId());
+        categoryComboBox.addItem("");
         for (CategoryDto category : categories) {
             categoryComboBox.addItem(category.getName());
         }
