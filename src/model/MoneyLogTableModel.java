@@ -17,6 +17,11 @@ public class MoneyLogTableModel extends AbstractTableModel {
         datas = dayLogDao.getDayLogArrayList(userId);
     }
     @Override
+    public String getColumnName(int column) {
+        // TODO Auto-generated method stub
+        return columnNames[column];
+    }
+    @Override
     public int getRowCount() {
         return datas.size();
     }
@@ -30,6 +35,7 @@ public class MoneyLogTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         DayLogDto dayLogDto = datas.get(rowIndex);
         CategoryDao categoryDao = new CategoryDao();
+
         String result = "";
 
         switch (columnIndex) {
