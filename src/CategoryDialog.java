@@ -67,13 +67,27 @@ public class CategoryDialog extends JDialog {
         addButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                boolean isDuplicate = false;
                 if (!nameTextField.getText().isEmpty()) {
-                    CategoryDao categoryDao = new CategoryDao();
-                    if (categoryDao.insertCategories(userDto.getId(), nameTextField.getText())) {
-                        resultLabel.setText(nameTextField.getText() + "를 카테고리에 추가했습니다");
-                        nameTextField.setText("");
-                    } else {
-                        resultLabel.setText("실패");
+                    for (int i = 0; i < categoryComboBox.getItemCount(); i++) {
+                        String item = categoryComboBox.getItemAt(i).toString();
+                        if(item.equals(nameTextField.getText())) {
+                            isDuplicate = true;
+                        }
+                    }
+
+                    if(!isDuplicate) {
+                        CategoryDao categoryDao = new CategoryDao();
+
+                        if (categoryDao.insertCategories(userDto.getId(), nameTextField.getText())) {
+                            resultLabel.setText(nameTextField.getText() + "를 카테고리에 추가했습니다");
+                            nameTextField.setText("");
+                        } else {
+                            resultLabel.setText("실패");
+                        }
+                    }
+                    else {
+                        resultLabel.setText("카테고리 중복입니다!!");
                     }
                 }else{
                     resultLabel.setText("카테고리 입력해주세요");
